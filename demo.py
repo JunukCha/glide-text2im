@@ -1,6 +1,5 @@
 from typing import Tuple
 
-from IPython.display import display
 from PIL import Image
 import numpy as np
 import torch as th
