@@ -78,9 +78,6 @@ source_mask_64 = th.ones_like(source_image_64)[:, :1]
 source_mask_64[:, :, 20:] = 0
 source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
 
-# Visualize the image we are inpainting
-show_images(source_image_256 * source_mask_256)
-
 
 ##############################
 # Sample from the base model #
@@ -201,4 +198,4 @@ up_samples = diffusion_up.p_sample_loop(
 model_up.del_cache()
 
 # Show the output
-show_images(up_samples)
+save_images(up_samples)
