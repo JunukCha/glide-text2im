@@ -240,3 +240,6 @@ for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_l
     
     concatenated_image = concatenate_horizontally_pil([source_orig, reshaped_pil], padding_size=10)
     concatenated_image.save(os.path.join(results_folder, "concatenated_image.jpg"))
+    
+    with open(os.path.join(results_folder, "text.txt"), "w") as f:
+        f.write(prompt)
