@@ -133,8 +133,8 @@ for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_l
     # source_mask_64 = th.zeros_like(source_image_64)[:, :1]
     # source_mask_64[:, :, 20:] = 0
     # source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
-    source_mask_256 = read_mask(mask_path, size=256)[:, :1]
-    source_mask_64 = read_mask(mask_path, size=64)[:, :1]
+    source_mask_256 = 1-read_mask(mask_path, size=256)[:, :1]
+    source_mask_64 = 1-read_mask(mask_path, size=64)[:, :1]
 
     ##############################
     # Sample from the base model #
@@ -240,4 +240,3 @@ for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_l
     
     concatenated_image = concatenate_horizontally_pil([source_orig, reshaped_pil], padding_size=10)
     concatenated_image.save(os.path.join(results_folder, "concatenated_image.jpg"))
-    break
