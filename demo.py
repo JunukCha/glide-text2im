@@ -222,7 +222,7 @@ for index, (text_path, source_path) in tqdm.tqdm(enumerate(zip(text_list, source
     scaled = ((up_samples + 1)*127.5).round().clamp(0,255).to(th.uint8).cpu()
     reshaped = scaled.permute(2, 0, 3, 1).reshape([up_samples.shape[2], -1, 3])
     
-    results_folder = f"results/{index:03d}"
+    results_folder = f"results_HQ/{index:03d}"
     os.makedirs(results_folder, exist_ok=True)
     reshaped_pil = Image.fromarray(reshaped.numpy())
     reshaped_pil = reshaped_pil.resize((w, h))
