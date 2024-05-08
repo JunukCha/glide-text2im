@@ -44,6 +44,12 @@ def read_image(path: str, size: int = 256) -> Tuple[th.Tensor, th.Tensor]:
     img = np.array(pil_img)
     return th.from_numpy(img)[None].permute(0, 3, 1, 2).float() / 127.5 - 1
 
+def read_mask(path: str, size: int = 256) -> Tuple[th.Tensor, th.Tensor]:
+    pil_img = Image.open(path).convert('RGB')
+    pil_img = pil_img.resize((size, size), resample=Image.BICUBIC)
+    img = np.array(pil_img)
+    return th.from_numpy(img)[None].permute(0, 3, 1, 2).float() / 255.
+
 # Create an classifier-free guidance sampling function
 def model_fn(x_t, ts, **kwargs):
     half = x_t[: len(x_t) // 2]
@@ -127,8 +133,8 @@ for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_l
     # source_mask_64 = th.ones_like(source_image_64)[:, :1]
     # source_mask_64[:, :, 20:] = 0
     # source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
-    source_mask_256 = 1-read_image(mask_path, size=256)[:, :1]
-    source_mask_64 = 1-read_image(mask_path, size=64)[:, :1]
+    source_mask_256 = 1-read_mask(mask_path, size=256)[:, :1]
+    source_mask_64 = 1-read_mask(mask_path, size=64)[:, :1]
 
     ##############################
     # Sample from the base model #
