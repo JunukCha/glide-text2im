@@ -106,11 +106,13 @@ guidance_scale = 5.0
 upsample_temp = 0.997
 
 source_list = glob.glob("../../code/demo_output_HQ/*/source.jpg")
+mask_list = glob.glob("../../code/demo_output_HQ/*/mask.png")
 text_list = glob.glob("../../code/demo_output_HQ/*/text.txt")
 source_list.sort()
+mask_list.sort()
 text_list.sort()
 
-for index, (text_path, source_path) in tqdm.tqdm(enumerate(zip(text_list, source_list)), total=len(text_list)):
+for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_list, source_list, mask_list)), total=len(text_list)):
     with open(text_path, "r") as f:
         prompt = f.read().splitlines()[0]
         
@@ -122,9 +124,11 @@ for index, (text_path, source_path) in tqdm.tqdm(enumerate(zip(text_list, source
 
     # The mask should always be a boolean 64x64 mask, and then we
     # can upsample it for the second stage.
-    source_mask_64 = th.ones_like(source_image_64)[:, :1]
-    source_mask_64[:, :, 20:] = 0
-    source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
+    # source_mask_64 = th.ones_like(source_image_64)[:, :1]
+    # source_mask_64[:, :, 20:] = 0
+    # source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
+    source_mask_256 = read_image(mask_path, size=256)
+    source_mask_64 = read_image(mask_path, size=64)
 
     ##############################
     # Sample from the base model #
@@ -230,3 +234,4 @@ for index, (text_path, source_path) in tqdm.tqdm(enumerate(zip(text_list, source
     
     concatenated_image = concatenate_horizontally_pil([source_orig, reshaped_pil], padding_size=10)
     concatenated_image.save(os.path.join(results_folder, "concatenated_image.jpg"))
+    break
