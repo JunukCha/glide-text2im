@@ -130,11 +130,11 @@ for index, (text_path, source_path, mask_path) in tqdm.tqdm(enumerate(zip(text_l
 
     # The mask should always be a boolean 64x64 mask, and then we
     # can upsample it for the second stage.
-    source_mask_64 = th.zeros_like(source_image_64)[:, :1]
+    # source_mask_64 = th.zeros_like(source_image_64)[:, :1]
     # source_mask_64[:, :, 20:] = 0
-    source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
-    # source_mask_256 = 1-read_mask(mask_path, size=256)[:, :1]
-    # source_mask_64 = 1-read_mask(mask_path, size=64)[:, :1]
+    # source_mask_256 = F.interpolate(source_mask_64, (256, 256), mode='nearest')
+    source_mask_256 = read_mask(mask_path, size=256)[:, :1]
+    source_mask_64 = read_mask(mask_path, size=64)[:, :1]
 
     ##############################
     # Sample from the base model #
