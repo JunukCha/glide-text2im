@@ -228,5 +228,5 @@ for index, (text_path, source_path) in tqdm.tqdm(enumerate(zip(text_list, source
     reshaped_pil = reshaped_pil.resize((w, h))
     reshaped_pil.save(osp.join(results_folder, "pred.jpg"))
     
-    concatenated_image = concatenate_horizontally_pil([reshaped_pil, source_orig], padding_size=10)
+    concatenated_image = concatenate_horizontally_pil([source_orig, reshaped_pil], padding_size=10)
     concatenated_image.save(os.path.join(results_folder, "concatenated_image.jpg"))
