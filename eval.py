@@ -285,11 +285,11 @@ for index, (text_path, source_path, target_path, mask_path) in \
     with open(os.path.join(results_folder, "text.txt"), "w") as f:
         f.write(prompt)
         
-    psnr = calculate_psnr(target, res)
+    psnr = calculate_psnr(target, reshaped_pil)
     psnr_list.append(psnr)
-    ssim = calculate_ssim(target, res)
+    ssim = calculate_ssim(target, reshaped_pil)
     ssim_list.append(ssim)
-    lpips = calculate_lpips(target, res)
+    lpips = calculate_lpips(target, reshaped_pil)
     lpips_list.append(lpips)
     
 print("psnr", np.array(psnr_list).mean())
