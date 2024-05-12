@@ -86,25 +86,26 @@ def read_mask(path: str, size: int = 256) -> Tuple[th.Tensor, th.Tensor]:
     return th.from_numpy(img)[None].permute(0, 3, 1, 2).float() / 255.
 
 # Create an classifier-free guidance sampling function
-def model_fn(x_t, ts, **kwargs):
-    half = x_t[: len(x_t) // 2]
-    combined = th.cat([half, half], dim=0)
-    model_out = model(combined, ts, **kwargs)
-    eps, rest = model_out[:, :3], model_out[:, 3:]
-    cond_eps, uncond_eps = th.split(eps, len(eps) // 2, dim=0)
-    half_eps = uncond_eps + guidance_scale * (cond_eps - uncond_eps)
-    eps = th.cat([half_eps, half_eps], dim=0)
-    return th.cat([eps, rest], dim=1)
 
-def denoised_fn(x_start):
-    # Force the model to have the exact right x_start predictions
-    # for the part of the image which is known.
-    return (
-        x_start * (1 - model_kwargs['inpaint_mask'])
-        + model_kwargs['inpaint_image'] * model_kwargs['inpaint_mask']
-    )
 
 def main():
+    def model_fn(x_t, ts, **kwargs):
+        half = x_t[: len(x_t) // 2]
+        combined = th.cat([half, half], dim=0)
+        model_out = model(combined, ts, **kwargs)
+        eps, rest = model_out[:, :3], model_out[:, 3:]
+        cond_eps, uncond_eps = th.split(eps, len(eps) // 2, dim=0)
+        half_eps = uncond_eps + guidance_scale * (cond_eps - uncond_eps)
+        eps = th.cat([half_eps, half_eps], dim=0)
+        return th.cat([eps, rest], dim=1)
+
+    def denoised_fn(x_start):
+        # Force the model to have the exact right x_start predictions
+        # for the part of the image which is known.
+        return (
+            x_start * (1 - model_kwargs['inpaint_mask'])
+            + model_kwargs['inpaint_image'] * model_kwargs['inpaint_mask']
+        )
     # This notebook supports both CPU and GPU.
     # On CPU, generating one sample may take on the order of 20 minutes.
     # On a GPU, it should be under a minute.
