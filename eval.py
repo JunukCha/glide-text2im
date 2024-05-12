@@ -153,6 +153,7 @@ def main():
     mask_list = glob.glob("../../code/eval_output_HQ/*/mask.png")
     text_list = glob.glob("../../code/eval_output_HQ/*/text.txt")
     source_list.sort()
+    target_list.sort()
     mask_list.sort()
     text_list.sort()
 
