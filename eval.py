@@ -14,6 +14,7 @@ from glide_text2im.model_creation import (
     model_and_diffusion_defaults,
     model_and_diffusion_defaults_upsampler
 )
+import lpips
 from torchvision.transforms import ToTensor, Resize, Compose
 from skimage.metrics import structural_similarity as ssim
 import torch
