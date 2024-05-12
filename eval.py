@@ -281,6 +281,7 @@ def main():
         reshaped_pil = Image.fromarray(reshaped.numpy())
         reshaped_pil = reshaped_pil.resize((w, h))
         reshaped_pil.save(osp.join(results_folder, "pred.jpg"))
+        target = target.resize((w, h))
         target.save(osp.join(results_folder, "target.jpg"))
         
         concatenated_image = concatenate_horizontally_pil([source_orig, reshaped_pil], padding_size=10)
