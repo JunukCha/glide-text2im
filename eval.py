@@ -148,10 +148,10 @@ def main():
     # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
     upsample_temp = 0.997
 
-    source_list = glob.glob("../../code/eval_output_HQ/*/source.jpg")
-    target_list = glob.glob("../../code/eval_output_HQ/*/target.jpg")
-    mask_list = glob.glob("../../code/eval_output_HQ/*/mask.png")
-    text_list = glob.glob("../../code/eval_output_HQ/*/text.txt")
+    source_list = glob.glob("../../code/eval_output_HQ_5/*/source.jpg")
+    target_list = glob.glob("../../code/eval_output_HQ_5/*/target.jpg")
+    mask_list = glob.glob("../../code/eval_output_HQ_5/*/mask.png")
+    text_list = glob.glob("../../code/eval_output_HQ_5/*/text.txt")
     source_list.sort()
     target_list.sort()
     mask_list.sort()
