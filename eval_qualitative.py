@@ -136,12 +136,11 @@ def main():
     
     for text_index in range(len(qualitative_texts)):
         prompt = qualitative_texts[text_index]
-        for index, (source_path, target_path, mask_path) in \
+        for index, (source_path, mask_path) in \
             tqdm.tqdm(enumerate(zip(source_list, mask_list)), total=len(source_list)):
             # Source image we are inpainting
             source_orig = Image.open(source_path)
             w, h = source_orig.size
-            target = Image.open(target_path)
             
             source_image_256 = read_image(source_path, size=256)
             source_image_64 = read_image(source_path, size=64)
