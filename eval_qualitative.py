@@ -136,6 +136,7 @@ def main():
     
     for text_index in range(len(qualitative_texts)):
         prompt = qualitative_texts[text_index]
+        prompt = "change portrait under the lighting of " + prompt
         for index, (source_path, mask_path) in \
             tqdm.tqdm(enumerate(zip(source_list, mask_list)), total=len(source_list)):
             # Source image we are inpainting
@@ -249,7 +250,7 @@ def main():
             scaled = ((up_samples + 1)*127.5).round().clamp(0,255).to(th.uint8).cpu()
             reshaped = scaled.permute(2, 0, 3, 1).reshape([up_samples.shape[2], -1, 3])
             
-            results_folder = f"eval_outputs_qualiative/{index:03d}"
+            results_folder = f"eval_outputs_qualiative2/{index:03d}"
             os.makedirs(results_folder, exist_ok=True)
             reshaped_pil = Image.fromarray(reshaped.numpy())
             reshaped_pil = reshaped_pil.resize((w, h))
