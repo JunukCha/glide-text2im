@@ -142,7 +142,7 @@ def main():
     # Sampling parameters
     # prompt = "a corgi in a field"
     batch_size = 1
-    guidance_scale = 5.0
+    guidance_scale = 7.5
 
     # Tune this parameter to control the sharpness of 256x256 images.
     # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
