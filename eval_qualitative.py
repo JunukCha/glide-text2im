@@ -135,6 +135,8 @@ def main():
     lpips_list = []
     
     for text_index in range(len(qualitative_texts)):
+        if text_index != 1:
+            continue
         prompt = qualitative_texts[text_index]
         prompt = "change portrait under the lighting of " + prompt
         for index, (source_path, mask_path) in \
