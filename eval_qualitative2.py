@@ -125,9 +125,9 @@ def main():
     # A value of 1.0 is sharper, but sometimes results in grainy artifacts.
     upsample_temp = 0.997
 
-    source_list = glob.glob("../../code/demo_output_qualitative-2/*/source.jpg")
-    mask_list = glob.glob("../../code/demo_output_qualitative-2/*/mask.png")
-    text_list = glob.glob("../../code/demo_output_qualitative-2/*/text.txt")
+    source_list = glob.glob("../../code/demo_output_qualitative-3/*/source.jpg")
+    mask_list = glob.glob("../../code/demo_output_qualitative-3/*/mask.png")
+    text_list = glob.glob("../../code/demo_output_qualitative-3/*/text.txt")
     source_list.sort()
     mask_list.sort()
     text_list.sort()
@@ -253,7 +253,7 @@ def main():
         scaled = ((up_samples + 1)*127.5).round().clamp(0,255).to(th.uint8).cpu()
         reshaped = scaled.permute(2, 0, 3, 1).reshape([up_samples.shape[2], -1, 3])
         
-        results_folder = f"eval_outputs_qualiative-2/{index:03d}"
+        results_folder = f"eval_outputs_qualiative-3/{index:03d}"
         os.makedirs(results_folder, exist_ok=True)
         reshaped_pil = Image.fromarray(reshaped.numpy())
         reshaped_pil = reshaped_pil.resize((w, h))
